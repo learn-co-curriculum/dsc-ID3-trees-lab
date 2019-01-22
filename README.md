@@ -1,5 +1,5 @@
 
-# ID3 Classification Trees: Perfect Split with Information Gain  - Lab
+# ID3 Classification Trees: Perfect Split with Information Gain - Lab
 
 ## Introduction
 
