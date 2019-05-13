@@ -21,9 +21,9 @@ We shall use the same problem about deciding weather to go and play tennis on a 
 | overcast | mild |  normal  |   N   |  yes |
 |   sunny  | cool |  normal  |   N   |  yes |
 | overcast |  hot |   high   |   Y   |  no  |
-|   sunny  |  hot |  normal  |   Y   |  no  |
+|   sunny  |  hot |  normal  |   Y   |  yes |
 |   rain   | mild |   high   |   N   |  no  |
-|   rain   | mild |  normal  |   N   |  no  |
+|   rain   | cool |  normal  |   N   |  no  |
 |   sunny  | mild |   high   |   N   |  yes |
 |   sunny  | cool |  normal  |   Y   |  yes |
 |   sunny  | mild |  normal  |   Y   |  yes |
@@ -194,7 +194,7 @@ print("Wind:,",IG(play, wind))
 So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
 ![](images/humid.png)
 
-Let's now see how to get to the leaf nodes using the branches from the node which we split on humidity above. 
+Let's continue.
 
 ## Third Iteration
 
