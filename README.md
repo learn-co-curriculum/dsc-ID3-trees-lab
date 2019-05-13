@@ -15,7 +15,22 @@ You will be able to:
 
 We shall use the same problem about deciding weather to go and play tennis on a given day, given the weather conditions. Here is the data from previous lesson:
 
-![](data.jpeg)
+|  outlook | temp | humidity | windy | play |
+|:--------:|:----:|:--------:|:-----:|:----:|
+| overcast | cool |   high   |   Y   |  yes |
+| overcast | mild |  normal  |   N   |  yes |
+|   sunny  | cool |  normal  |   N   |  yes |
+| overcast |  hot |   high   |   Y   |  no  |
+|   sunny  |  hot |  normal  |   Y   |  no  |
+|   rain   | mild |   high   |   N   |  no  |
+|   rain   | mild |  normal  |   N   |  no  |
+|   sunny  | mild |   high   |   N   |  yes |
+|   sunny  | cool |  normal  |   Y   |  yes |
+|   sunny  | mild |  normal  |   Y   |  yes |
+| overcast | cool |   high   |   N   |  yes |
+|   rain   | cool |   high   |   Y   |  no  |
+|   sunny  |  hot |  normal  |   Y   |  no  |
+|   sunny  | mild |   high   |   N   |  yes |
 
 ## Write a function `entropy(pi)` to calculate total entropy in a given discrete probability distribution `pi`
 
@@ -55,7 +70,7 @@ print (entropy([2,10])) # A random mix of classes
     1.0
     -0.0
     0.6500224216483541
-
+    
 
 ## Write a function `IG(D,a)` to calculate the information gain 
 
@@ -96,7 +111,7 @@ print(IG(test_dist, test_attr))
 ```
 
     0.5408520829727552
-
+    
 
 ## First Iteration - Decide Best Split for master node
 
@@ -111,22 +126,22 @@ play = [9, 5] # Yes, No
 
 # attribute, number of members (feature)
 outlook = [
-    [4, 0],  # overcase
-    [2, 3],  # sunny
-    [3, 2]   # rain
+    [3, 1],  # overcast   [yes, no]
+    [6, 1],  # sunny      
+    [0, 3]   # rain
 ]
 temperature = [
-    [2, 2],  # hot
-    [3, 1],  # cool
-    [4, 2]   # mild
+    [1, 2],  # hot
+    [4, 2],  # cool
+    [4, 1]   # mild
 ]
 humidity = [
-    [3, 4],  # high
-    [6, 1]   # normal
+    [4, 3],  # high
+    [5, 2]   # normal
 ]
 wind = [
-    [6, 2],  # no
-    [3, 3]   # yes
+    [5, 2],  # no
+    [4, 3]   # yes
 ]
 print ("Information Gain:\n" )
 print("Outlook:", IG(play, outlook))
@@ -137,29 +152,29 @@ print("Wind:,",IG(play, wind))
 
     Information Gain:
     
-    Outlook: 0.2467498197744391
-    Temperature: 0.029222565658954647
-    Humidity: 0.15183550136234136
-    Wind:, 0.04812703040826927
-
+    Outlook: 0.41265581953400066
+    Temperature: 0.09212146003297261
+    Humidity: 0.0161116063701896
+    Wind:, 0.0161116063701896
+    
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at root node. So far we have our root node looking as below:
-![](tree-v1.png)
+![](images/tree-v1.png)
 
 ## Second Iteration
 
-For the branch (edge) of three above that leads to the "Sunny" outcome. Check for temperature, humidity and wind attributes to see which one provides the highest information gain. 
+Since the first iteration determines what split we should make for the root node of our tree, it's pretty simple. Now, we move down to the second level, and start finding the optimal split for each of the nodes on this level. The first branch (edge) of three above that leads to the "Sunny" outcome. Check for temperature, humidity and wind attributes to see which one provides the highest information gain. 
 
-For the steps as above. __Remember we only have 2 positive and 3 negative examples in the "sunny" branch.__ 
+For the steps as above. __Remember, we have 6 positive and 1 negative examples in the "sunny" branch.__ 
 
 
 ```python
 # set of example of the dataset
-Play = [2, 3] 
+Play = [6, 1] 
 
-temperature = [[0, 2],[1, 0], [1, 1]]  
-humidity = [[0, 3],[2, 0]]
-wind = [[2, 2],[1, 1]]
+temperature = [[1, 1],[3, 0], [2, 0]]  # hot, mild, cool [yes, no]  
+humidity = [[2, 0],[4, 1]]   # high, normal [yes, no]
+wind = [[3, 1],[3, 0]]      # Y, N [yes, no]
 
 
 print ("Information Gain:\n" )
@@ -172,65 +187,32 @@ print("Wind:,",IG(play, wind))
     Information Gain:
     
     Temperature: 0.7974288158134881
-    Humidity: 0.9402859586706309
-    Wind:, 0.5117145300992023
+    Humidity: 0.6824544962108586
+    Wind:, 0.7084922088251644
+    
 
-
-So here we see that humidity gives us the the highest information gain, so we shall use this to split our tree as shown below:
-![](humid.png)
+So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
+![](images/humid.png)
 
 Let's now see how to get to the leaf nodes using the branches from the node which we split on humidity above. 
 
 ## Third Iteration
 
-We now have humidity which has two possible values [High, Normal]. A branch High dominated by single label which is __No__, caused this branch ended with a leaf contains label No. Same case with branch Normal which ended with a leaf contains label __Yes__. so we dont split these leaves any further as they are now "pure leaves" and will get shown as below:
+We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny.  Temperature has three possible values: `[Hot, Mild, Cool]`. This means that for each of the possible temperatures, we'll need to calculate if spliting on _windy_ or _humidity_ gives us the greatest possible information gain.  
 
-![](third.png)
+Why are we doing this next instead of the rest of the splits on level 2? Because Decision Trees are a **_Greedy Algorithm_**, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next. 
 
-## Fourth Iteration
+## All the Other Iterations
 
-All rows contains value "Overcast" contain single label __Yes__ in the target, so branch of Overcast ends with a leaf contains label __Yes__. Just like above, it is a pure leaf and wont get split any further. 
-
-![](fourth.png)
-
-## Fifth Iteration
-
-We will now check which is the best attribute for branch of "Rain". Remember, that new distribution is only rows containing values of Rain i.e. 3 positive and 2 negative examples. Repeat the process we did for master node and second iteration to see which attribute gives the best information gain.
-
-
-```python
-# set of example of the dataset
-play = [3, 2] # Yes, No
-
-temperature = [[2, 1],[1, 1]] # [0, 0] hot - we dont need to pass in an empty distribution
-humidity = [[1, 1], [2, 1]]
-wind = [[3, 0],[0, 2]]
-
-print ("Information Gain:\n" )
-print("Temperature:",IG(play, temperature))
-print("Humidity:",IG(play, humidity))
-print("Wind:,",IG(play, wind))
-
-```
-
-    Information Gain:
-    
-    Temperature: 0.01997309402197489
-    Humidity: 0.01997309402197489
-    Wind:, 0.9709505944546686
-
-
-Right, its wind this time, giving us the highest information gain. So that is what we use for the split. This will result as following:
-
-![](fifth.png)
-
-## Sixth Iteration
-
-Next node is an attribute "Wind" with two possible classes [Weak, Strong]. A branch Strong dominated by single label which is __No__, caused this branch ended with a leaf contains label No. Same case with branch Weak which ended with a leaf contains label __Yes__. so no further splitting is required and we can declare these as leaf nodes as shown below.
-![](sixth.png)
-
-So now we have all branches ending on leaf nodes, and these nodes are "pure" containing only positive or negative examples. So no further splitting is required and we now have a decision tree ready for classification. Also, notice that we did not use the the "Temperature" for splitting at any stage. We have effectively "pruned" that feature to leave it out of the training process as it we have better predictors helping us fully tidy up the data. We shall look more into pruning in following lessons. 
+What happens once we get down to a 'pure' split? Obviously, we stop splitting. Once that happens, we go back to the highest remaining uncalculated node, and calculate the best possible split for that one. We then continue on with that branch, until we have exhausted all possible splits or we run into a split that gives us 'pure' leaves where all 'play=Yes' is on one side of the split, and all 'play=No' is on the other. 
 
 ## Summary 
 
-Decision tree is a very simple model that you can build from starch easily. One of popular Decision Tree algorithm is ID3. Basically, we only need to construct tree data structure and implements two mathematical formula to build complete ID3 algorithm as we saw above. We shall look into this implementation with sklearn in our next lesson. 
+Now, you've seen:
+
+* How to calculate entropy
+* How to calculate information gain
+* How to figure out the optimal split
+* How to figure out what the next split you should calculate should be ('greedy' approach)
+
+This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified how the algorithm actually 'learns' from data. Great job!
