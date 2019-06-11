@@ -63,7 +63,7 @@ print (entropy([2,10])) # A random mix of classes
     None
     None
     None
-    
+
 
 ## Write a function `IG(D,a)` to calculate the information gain 
 
@@ -99,7 +99,7 @@ print(IG(test_dist, test_attr))
 ```
 
     None
-    
+
 
 ## First Iteration - Decide Best Split for master node
 
@@ -130,10 +130,11 @@ print(IG(test_dist, test_attr))
     Temperature: 0.029222565658954647
     Humidity: 0.15183550136234136
     Wind:, 0.04812703040826927
-    
+
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at root node. So far we have our root node looking as below:
-![](images/tree-v1.png)
+<img src='images/tree_fs.png'  width ="500"  >
+
 
 ## Second Iteration
 
@@ -162,16 +163,18 @@ For the steps as above. Remember, we have 6 positive and 1 negative examples in 
     Temperature: 0.7974288158134881
     Humidity: 0.9402859586706309
     Wind:, 0.5117145300992023
-    
+
 
 So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
-![](images/humid.png)
+
+<img src='images/humid_fs.png'  width ="650"  >
+
 
 Let's continue. 
 
 ## Third Iteration
 
-We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny. Temperature has three possible values: [Hot, Mild, Cool]. This means that for each of the possible temperatures, we'll need to calculate if spliting on windy or humidity gives us the greatest possible information gain.
+We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny. Temperature has three possible values: [Hot, Mild, Cool]. This means that for each of the possible temperatures, we'll need to calculate if splitting on windy or humidity gives us the greatest possible information gain.
 
 Why are we doing this next instead of the rest of the splits on level 2? Because Decision Trees are a Greedy Algorithm, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next.
 
@@ -183,8 +186,8 @@ What happens once we get down to a 'pure' split? Obviously, we stop splitting. O
 
 Now, you've seen:
 
-How to calculate entropy
-How to calculate information gain
-How to figure out the optimal split
-How to figure out what the next split you should calculate should be ('greedy' approach)
-This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified how the algorithm actually 'learns' from data. Great job!
+- How to calculate entropy
+- How to calculate information gain
+- How to figure out the optimal split
+- How to figure out what the next split you should calculate should be ('greedy' approach)
+- This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified - How the algorithm actually 'learns' from data. Great job
