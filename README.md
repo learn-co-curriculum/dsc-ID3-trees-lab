@@ -70,7 +70,7 @@ print (entropy([2,10])) # A random mix of classes
     1.0
     -0.0
     0.6500224216483541
-    
+
 
 ## Write a function `IG(D,a)` to calculate the information gain 
 
@@ -111,7 +111,7 @@ print(IG(test_dist, test_attr))
 ```
 
     0.5408520829727552
-    
+
 
 ## First Iteration - Decide Best Split for master node
 
@@ -156,7 +156,7 @@ print("Wind:,",IG(play, wind))
     Temperature: 0.09212146003297261
     Humidity: 0.0161116063701896
     Wind:, 0.0161116063701896
-    
+
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at root node. So far we have our root node looking as below:
 ![](images/tree-v1.png)
@@ -189,7 +189,7 @@ print("Wind:,",IG(play, wind))
     Temperature: 0.7974288158134881
     Humidity: 0.6824544962108586
     Wind:, 0.7084922088251644
-    
+
 
 So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
 ![](images/humid.png)
