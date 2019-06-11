@@ -3,7 +3,7 @@
 
 ## Introduction
 
-In this lab, we will simulate the example from the previous lesson in python. We will write functions to calculate entropy and IG which will be used for calculating these uncertainty measures and deciding upon creating a split using information gain while growing a ID3 classification tree. We shall attempt to write general function that can be used for other (larger)  problems as well. So let's get on with it. 
+In this lab, we will simulate the example from the previous lesson in python. We will write functions to calculate entropy and IG which will be used for calculating these uncertainty measures and deciding upon creating a split using information gain while growing a ID3 classification tree. We shall attempt to write general function that can be used for other (larger) problems as well. So let's get on with it.
 
 ## Objectives
 You will be able to:
@@ -159,13 +159,14 @@ print("Wind:,",IG(play, wind))
 
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at root node. So far we have our root node looking as below:
-![](images/tree-v1.png)
+<img src='images/tree_fs.png'  width ="500"  >
+
 
 ## Second Iteration
 
-Since the first iteration determines what split we should make for the root node of our tree, it's pretty simple. Now, we move down to the second level, and start finding the optimal split for each of the nodes on this level. The first branch (edge) of three above that leads to the "Sunny" outcome. Check for temperature, humidity and wind attributes to see which one provides the highest information gain. 
+Since the first iteration determines what split we should make for the root node of our tree, it's pretty simple. Now, we move down to the second level, and start finding the optimal split for each of the nodes on this level. The first branch (edge) of three above that leads to the "Sunny" outcome. Check for temperature, humidity and wind attributes to see which one provides the highest information gain.
 
-For the steps as above. __Remember, we have 6 positive and 1 negative examples in the "sunny" branch.__ 
+For the steps as above. Remember, we have 6 positive and 1 negative examples in the "sunny" branch.
 
 
 ```python
@@ -192,27 +193,28 @@ print("Wind:,",IG(play, wind))
 
 
 So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
-![](images/humid.png)
 
-Let's continue.
+<img src='images/humid_fs.png'  width ="650"  >
+
+
+Let's continue. 
 
 ## Third Iteration
 
-We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny.  Temperature has three possible values: `[Hot, Mild, Cool]`. This means that for each of the possible temperatures, we'll need to calculate if spliting on _windy_ or _humidity_ gives us the greatest possible information gain.  
+We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny. Temperature has three possible values: [Hot, Mild, Cool]. This means that for each of the possible temperatures, we'll need to calculate if splitting on windy or humidity gives us the greatest possible information gain.
 
-Why are we doing this next instead of the rest of the splits on level 2? Because Decision Trees are a **_Greedy Algorithm_**, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next. 
+Why are we doing this next instead of the rest of the splits on level 2? Because Decision Trees are a Greedy Algorithm, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next.
 
 ## All the Other Iterations
 
-What happens once we get down to a 'pure' split? Obviously, we stop splitting. Once that happens, we go back to the highest remaining uncalculated node, and calculate the best possible split for that one. We then continue on with that branch, until we have exhausted all possible splits or we run into a split that gives us 'pure' leaves where all 'play=Yes' is on one side of the split, and all 'play=No' is on the other. 
+What happens once we get down to a 'pure' split? Obviously, we stop splitting. Once that happens, we go back to the highest remaining uncalculated node, and calculate the best possible split for that one. We then continue on with that branch, until we have exhausted all possible splits or we run into a split that gives us 'pure' leaves where all 'play=Yes' is on one side of the split, and all 'play=No' is on the other.
 
 ## Summary 
 
 Now, you've seen:
 
-* How to calculate entropy
-* How to calculate information gain
-* How to figure out the optimal split
-* How to figure out what the next split you should calculate should be ('greedy' approach)
-
-This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified how the algorithm actually 'learns' from data. Great job!
+- How to calculate entropy
+- How to calculate information gain
+- How to figure out the optimal split
+- How to figure out what the next split you should calculate should be ('greedy' approach)
+- This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified - How the algorithm actually 'learns' from data. Great job
