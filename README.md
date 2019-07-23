@@ -34,7 +34,7 @@ We shall use the same problem about deciding weather to go and play tennis on a 
 
 ## Write a function `entropy(pi)` to calculate total entropy in a given discrete probability distribution `pi`
 
-- The function should input a probability distribution `pi` as an array of class distributions
+- The function should input a probability distribution `pi` as an array of class distributions. This should take the form of two integers to represent how many items are in each class.  For example: `[4,4]` indicates that there is four item in each class. `[10,0]` indicates that there are 10 items in one class and 0 in the other.
 - Calculate and return entropy according to the formula: $$Entropy(p) = -\sum (P_i . log_2(P_i))$$
 
 
