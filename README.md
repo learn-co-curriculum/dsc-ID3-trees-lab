@@ -3,17 +3,19 @@
 
 ## Introduction
 
-In this lab, we will simulate the example from the previous lesson in python. We will write functions to calculate entropy and IG which will be used for calculating these uncertainty measures and deciding upon creating a split using information gain while growing a ID3 classification tree. We shall attempt to write general function that can be used for other (larger) problems as well. So let's get on with it.
+In this lab, we will simulate the example from the previous lesson in Python. You will write functions to calculate entropy and IG which will be used for calculating these uncertainty measures and deciding upon creating a split using information gain while growing a ID3 classification tree. You will also write a general function that can be used for other (larger) problems as well. So let's get on with it.
 
 ## Objectives
-You will be able to:
-- Write functions for calculating Entropy and Information gain measures
-- Identify the attribute for best split at master and each subsequent node
+
+In this lab you will: 
+
+- Write functions for calculating entropy and information gain measures  
+- Use entropy and information gain to identify the attribute for best split at each node
 
 
 ## Problem
 
-We shall use the same problem about deciding weather to go and play tennis on a given day, given the weather conditions. Here is the data from previous lesson:
+You will use the same problem about deciding weather to go and play tennis on a given day, given the weather conditions. Here is the data from previous lesson:
 
 |  outlook | temp | humidity | windy | play |
 |:--------:|:----:|:--------:|:-----:|:----:|
@@ -32,48 +34,45 @@ We shall use the same problem about deciding weather to go and play tennis on a 
 |   sunny  |  hot |  normal  |   Y   |  no  |
 |   sunny  | mild |   high   |   N   |  yes |
 
+
 ## Write a function `entropy(pi)` to calculate total entropy in a given discrete probability distribution `pi`
 
-- The function should input a probability distribution `pi` as an array of class distributions. This should take the form of two integers to represent how many items are in each class.  For example: `[4,4]` indicates that there is four item in each class. `[10,0]` indicates that there are 10 items in one class and 0 in the other.
+- The function should input a probability distribution `pi` as an array of class distributions. This should take the form of two integers to represent how many items are in each class.  For example: `[4, 4]` indicates that there are four items in each class, `[10, 0]` indicates that there are 10 items in one class and 0 in the other. 
 - Calculate and return entropy according to the formula: $$Entropy(p) = -\sum (P_i . log_2(P_i))$$
 
 
 ```python
-from math import log
+from math import log 
+
 def entropy(pi):
-    '''
+    """
     return the Entropy of a probability distribution:
     entropy(p) = - SUM (Pi * log(Pi) )
-    '''
+    """
 
     pass
 
 
 # Test the function 
 
-print(entropy([1,1])) # Maximum Entropy e.g. a coin toss
-print (entropy([0,6])) # No entropy, ignore the -ve with zero , its there due to log function
-print (entropy([2,10])) # A random mix of classes
+print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
+print(entropy([0, 6])) # No entropy, ignore the -ve with zero , its there due to log function
+print(entropy([2, 10])) # A random mix of classes
 
 # 1.0
 # 0.0
 # 0.6500224216483541
 ```
 
-    None
-    None
-    None
-
-
 
 ```python
 # __SOLUTION__ 
 from math import log
 def entropy(pi):
-    '''
+    """
     return the Entropy of a probability distribution:
     entropy(p) = - SUM (Pi * log(Pi) )
-    '''
+    """
 
     total = 0
     for p in pi:
@@ -85,11 +84,11 @@ def entropy(pi):
     total *= -1
     return total
 
-# Test the function by uncommenting cells below
+# Test the function
 
-print(entropy([1,1])) # Maximum Entropy e.g. a coin toss
-print (entropy([0,6])) # No entropy, ignore the -ve with zero , its there due to log function
-print (entropy([2,10])) # A random mix of classes
+print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
+print(entropy([0, 6])) # No entropy, ignore the -ve with zero , its there due to log function
+print(entropy([2, 10])) # A random mix of classes
 
 # 1.0
 # 0.0
@@ -104,29 +103,28 @@ print (entropy([2,10])) # A random mix of classes
 ## Write a function `IG(D,a)` to calculate the information gain 
 
 - The function should input `D` as a class distribution array for target class, and `a` the class distribution of the attribute to be tested
-- Using the `entropy()` function above, calculate the information gain as:
+- Using the `entropy()` function from above to calculate the information gain as:
 
 $$gain(D,A) = Entropy(D) - \sum(\frac{|D_i|}{|D|}.Entropy(D_i))$$
 
-where `Di` represents distribution of each class in `a`.
+where $D_{i}$ represents distribution of each class in `a`.
 
 
 
 ```python
 def IG(D, a):
-    '''
+    """
     return the information gain:
     gain(D, A) = entropy(D)− SUM( |Di| / |D| * entropy(Di) )
-    '''
+    """
 
     pass
 
 
-# Uncomment to run the test
-
-# set of example of the dataset - distribution of classes
+# Test the function
+# Set of example of the dataset - distribution of classes
 test_dist = [6, 6] # Yes, No
-# attribute, number of members (feature)
+# Attribute, number of members (feature)
 test_attr = [ [4,0], [2,4], [0,2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
 
 print(IG(test_dist, test_attr))
@@ -134,17 +132,14 @@ print(IG(test_dist, test_attr))
 # 0.5408520829727552
 ```
 
-    None
-
-
 
 ```python
 # __SOLUTION__ 
 def IG(D, a):
-    '''
+    """
     return the information gain:
     gain(D, A) = entropy(D)− SUM( |Di| / |D| * entropy(Di) )
-    '''
+    """
 
     total = 0
     for Di in a:
@@ -154,12 +149,11 @@ def IG(D, a):
     return gain
 
 
-# Uncomment to run the test
-
+# Test the function
 # set of example of the dataset - distribution of classes
 test_dist = [6, 6] # Yes, No
 # attribute, number of members (feature)
-test_attr = [ [4,0], [2,4], [0,2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
+test_attr = [ [4, 0], [2, 4], [0, 2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
 
 print(IG(test_dist, test_attr))
 
@@ -169,16 +163,14 @@ print(IG(test_dist, test_attr))
     0.5408520829727552
 
 
-## First Iteration - Decide Best Split for master node
+## First iteration - Decide best split for master node
 
-- Create The class distribution `play` as a list showing frequencies of both classes from the dataset
+- Create the class distribution `play` as a list showing frequencies of both classes from the dataset
 - Similarly create variables for four categorical feature attributes showing the class distribution for each class with respect to the target classes (yes and no)
 - Pass the play distribution with each attribute to calculate the information gain
 
 
 ```python
-
-
 # Your code here
 
 
@@ -186,24 +178,22 @@ print(IG(test_dist, test_attr))
 
 # Information Gain:
 
+print ("Information Gain:\n" )
+print("Outlook:", IG(play, outlook))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
+
 # Outlook: 0.41265581953400066
 # Temperature: 0.09212146003297261
 # Humidity: 0.0161116063701896
 # Wind:, 0.0161116063701896
 ```
 
-    Information Gain:
-    
-    Outlook: 0.2467498197744391
-    Temperature: 0.029222565658954647
-    Humidity: 0.15183550136234136
-    Wind:, 0.04812703040826927
-
-
 
 ```python
 # __SOLUTION__ 
-# set of example of the dataset
+# Set of example of the dataset
 play = [9, 5] # Yes, No
 
 # attribute, number of members (feature)
@@ -225,11 +215,14 @@ wind = [
     [5, 2],  # no
     [4, 3]   # yes
 ]
+
+
+# Information Gain:
 print ("Information Gain:\n" )
 print("Outlook:", IG(play, outlook))
-print("Temperature:",IG(play, temperature))
-print("Humidity:",IG(play, humidity))
-print("Wind:,",IG(play, wind))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:", IG(play, wind))
 ```
 
     Information Gain:
@@ -237,47 +230,43 @@ print("Wind:,",IG(play, wind))
     Outlook: 0.41265581953400066
     Temperature: 0.09212146003297261
     Humidity: 0.0161116063701896
-    Wind:, 0.0161116063701896
+    Wind: 0.0161116063701896
 
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at root node. So far we have our root node looking as below:
-<img src='images/tree_fs.png'  width ="500"  >
+<img src='images/outlook.png'  width ="650"  >
 
 
-## Second Iteration
+## Second iteration
 
 Since the first iteration determines what split we should make for the root node of our tree, it's pretty simple. Now, we move down to the second level, and start finding the optimal split for each of the nodes on this level. The first branch (edge) of three above that leads to the "Sunny" outcome. Check for temperature, humidity and wind attributes to see which one provides the highest information gain.
 
-For the steps as above. Remember, we have 6 positive and 1 negative examples in the "sunny" branch.
+Follow the same steps as above. Remember, we have 6 positive and 1 negative examples in the "sunny" branch.
 
 
 ```python
-
-
 # Your code here 
 
 
 
 
 # Information Gain:
+print ("Information Gain:\n" )
+
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
 
 # Temperature: 0.7974288158134881
 # Humidity: 0.6824544962108586
 # Wind:, 0.7084922088251644
 ```
 
-    Information Gain:
-    
-    Temperature: 0.7974288158134881
-    Humidity: 0.9402859586706309
-    Wind:, 0.5117145300992023
-
-
 
 ```python
 # __SOLUTION__ 
-# set of example of the dataset
-Play = [6, 1] 
+# Set of example of the dataset
+play = [6, 1] 
 
 temperature = [[1, 1],[3, 0], [2, 0]]  # hot, mild, cool [yes, no]  
 humidity = [[2, 0],[4, 1]]   # high, normal [yes, no]
@@ -286,41 +275,38 @@ wind = [[3, 1],[3, 0]]      # Y, N [yes, no]
 
 print ("Information Gain:\n" )
 
-print("Temperature:",IG(play, temperature))
-print("Humidity:",IG(play, humidity))
-print("Wind:,",IG(play, wind))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:", IG(play, wind))
 ```
 
     Information Gain:
     
-    Temperature: 0.7974288158134881
-    Humidity: 0.6824544962108586
-    Wind:, 0.7084922088251644
+    Temperature: 0.3059584928680418
+    Humidity: 0.0760098536627829
+    Wind: 0.12808527889139443
 
 
 So here we see that temperature gives us the the highest information gain, so we'll use it to split our tree as shown below:
 
-<img src='images/humid_fs.png'  width ="650"  >
+<img src='images/temp.png'  width ="650"  >
 
 
 Let's continue. 
 
-## Third Iteration
+## Third iteration
 
 We'll now calculate splits for the 'temperature' node we just created for days where the weather is sunny. Temperature has three possible values: [Hot, Mild, Cool]. This means that for each of the possible temperatures, we'll need to calculate if splitting on windy or humidity gives us the greatest possible information gain.
 
-Why are we doing this next instead of the rest of the splits on level 2? Because Decision Trees are a Greedy Algorithm, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next.
+Why are we doing this next instead of the rest of the splits on level 2? Because a decision tree is a greedy algorithm, meaning that the next choice is always the one that will give it the greatest information gain. In this case, evaluating the temperature on sunny days gives us the most information gain, so that's where we'll go next.
 
-## All the Other Iterations
+## All other iterations
 
 What happens once we get down to a 'pure' split? Obviously, we stop splitting. Once that happens, we go back to the highest remaining uncalculated node, and calculate the best possible split for that one. We then continue on with that branch, until we have exhausted all possible splits or we run into a split that gives us 'pure' leaves where all 'play=Yes' is on one side of the split, and all 'play=No' is on the other.
 
 ## Summary 
 
-Now, you've seen:
+This lab should have helped you familiarize yourself with how decision trees work 'under the hood', and demystified how the algorithm actually 'learns' from data by: 
 
-- How to calculate entropy
-- How to calculate information gain
-- How to figure out the optimal split
-- How to figure out what the next split you should calculate should be ('greedy' approach)
-- This lab should have helped you familiarize yourself with how Decision Trees work 'under the hood', and demystified - How the algorithm actually 'learns' from data. Great job
+- Calculating entropy and information gain
+- Figuring out the next split you should calculate ('greedy' approach) 
