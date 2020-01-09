@@ -8,7 +8,6 @@ In this lab, we will simulate the example from the previous lesson in Python. Yo
 ## Objectives
 
 In this lab you will: 
-
 - Write functions for calculating entropy and information gain measures  
 - Use entropy and information gain to identify the attribute for best split at each node
 
