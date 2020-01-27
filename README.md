@@ -1,3 +1,4 @@
+
 # ID3 Classification Trees: Perfect Split with Information Gain - Lab
 
 ## Introduction
@@ -63,6 +64,33 @@ print(entropy([2, 10])) # A random mix of classes
 # 0.6500224216483541
 ```
 
+
+```python
+# __SOLUTION__ 
+from math import log
+def entropy(pi):
+    """
+    return the Entropy of a probability distribution:
+    entropy(p) = - SUM (Pi * log(Pi) )
+    """
+
+    total = 0
+    for p in pi:
+        p = p / sum(pi)
+        if p != 0:
+            total +=  p * log(p, 2)
+        else:
+            total += 0
+    total *= -1
+    return total
+
+# Test the function
+
+print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
+print(entropy([0, 6])) # No entropy, ignore the -ve with zero , its there due to log function
+print(entropy([2, 10])) # A random mix of classes
+```
+
 ## Write a function `IG(D,a)` to calculate the information gain 
 
 - As input, the function should take in `D` as a class distribution array for target class, and `a` the class distribution of the attribute to be tested
@@ -95,6 +123,32 @@ print(IG(test_dist, test_attr))
 # 0.5408520829727552
 ```
 
+
+```python
+# __SOLUTION__ 
+def IG(D, a):
+    """
+    return the information gain:
+    gain(D, A) = entropy(D)− SUM( |Di| / |D| * entropy(Di) )
+    """
+
+    total = 0
+    for Di in a:
+        total += abs(sum(Di) / sum(D)) * entropy(Di)
+
+    gain = entropy(D) - total
+    return gain
+
+
+# Test the function
+# set of example of the dataset - distribution of classes
+test_dist = [6, 6] # Yes, No
+# attribute, number of members (feature)
+test_attr = [ [4, 0], [2, 4], [0, 2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
+
+print(IG(test_dist, test_attr))
+```
+
 ## First iteration - Decide the best split for the root node
 
 - Create the class distribution `play` as a list showing frequencies of both classes from the dataset
@@ -110,16 +164,51 @@ print(IG(test_dist, test_attr))
 
 # Information Gain:
 
-print ("Information Gain:\n" )
-print("Outlook:", IG(play, outlook))
-print("Temperature:", IG(play, temperature))
-print("Humidity:", IG(play, humidity))
-print("Wind:,", IG(play, wind))
+print ('Information Gain:\n' )
+print('Outlook:', IG(play, outlook))
+print('Temperature:', IG(play, temperature))
+print('Humidity:', IG(play, humidity))
+print('Wind:,', IG(play, wind))
 
 # Outlook: 0.41265581953400066
 # Temperature: 0.09212146003297261
 # Humidity: 0.0161116063701896
 # Wind:, 0.0161116063701896
+```
+
+
+```python
+# __SOLUTION__ 
+# Set of example of the dataset
+play = [9, 5] # Yes, No
+
+# attribute, number of members (feature)
+outlook = [
+    [3, 1],  # overcast   [yes, no]
+    [6, 1],  # sunny      
+    [0, 3]   # rain
+]
+temperature = [
+    [1, 2],  # hot
+    [4, 2],  # cool
+    [4, 1]   # mild
+]
+humidity = [
+    [4, 3],  # high
+    [5, 2]   # normal
+]
+wind = [
+    [5, 2],  # no
+    [4, 3]   # yes
+]
+
+
+# Information Gain:
+print ('Information Gain:\n' )
+print('Outlook:', IG(play, outlook))
+print('Temperature:', IG(play, temperature))
+print('Humidity:', IG(play, humidity))
+print('Wind:', IG(play, wind))
 ```
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at the root node. So far, we've built the following decision tree:
@@ -140,15 +229,33 @@ Follow the same steps as above. Remember, we have 6 positive examples and 1 nega
 
 
 # Information Gain:
-print ("Information Gain:\n" )
+print ('Information Gain:\n' )
 
-print("Temperature:", IG(play, temperature))
-print("Humidity:", IG(play, humidity))
-print("Wind:,", IG(play, wind))
+print('Temperature:', IG(play, temperature))
+print('Humidity:', IG(play, humidity))
+print('Wind:,', IG(play, wind))
 
 # Temperature: 0.7974288158134881
 # Humidity: 0.6824544962108586
 # Wind:, 0.7084922088251644
+```
+
+
+```python
+# __SOLUTION__ 
+# Set of example of the dataset
+play = [6, 1] 
+
+temperature = [[1, 1],[3, 0], [2, 0]]  # hot, mild, cool [yes, no]  
+humidity = [[2, 0],[4, 1]]   # high, normal [yes, no]
+wind = [[3, 1],[3, 0]]      # Y, N [yes, no]
+
+
+print ('Information Gain:\n' )
+
+print('Temperature:', IG(play, temperature))
+print('Humidity:', IG(play, humidity))
+print('Wind:', IG(play, wind))
 ```
 
 We see that temperature gives us the highest information gain, so we'll use it to split our tree as shown below:
@@ -174,8 +281,3 @@ This lab should have helped you familiarize yourself with how decision trees wor
 
 - Calculating entropy and information gain
 - Figuring out the next split you should calculate ('greedy' approach) 
-
-
-```python
-
-```
