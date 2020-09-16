@@ -56,11 +56,11 @@ def entropy(pi):
 # Test the function 
 
 print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
-print(entropy([0, 6])) # No entropy, ignore the -ve with zero , its there due to log function
+print(entropy([0, 6])) # No entropy, ignore the -ve with zero , it's there due to log function
 print(entropy([2, 10])) # A random mix of classes
 
 # 1.0
-# 0.0
+# -0.0
 # 0.6500224216483541
 ```
 
@@ -147,9 +147,9 @@ print('Temperature:', IG(play, temperature))
 print('Humidity:', IG(play, humidity))
 print('Wind:,', IG(play, wind))
 
-# Temperature: 0.7974288158134881
-# Humidity: 0.6824544962108586
-# Wind:, 0.7084922088251644
+# Temperature: 0.3059584928680418
+# Humidity: 0.0760098536627829
+# Wind: 0.12808527889139443
 ```
 
 We see that temperature gives us the highest information gain, so we'll use it to split our tree as shown below:
