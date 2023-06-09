@@ -1,4 +1,3 @@
-
 # ID3 Classification Trees: Perfect Split with Information Gain - Lab
 
 ## Introduction
@@ -42,7 +41,8 @@ You will use the same problem about deciding whether to go and play tennis on a 
 
 
 ```python
-from math import log 
+from math import log
+
 
 def entropy(pi):
     """
@@ -53,11 +53,13 @@ def entropy(pi):
     pass
 
 
-# Test the function 
+# Test the function
 
-print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
-print(entropy([0, 6])) # No entropy, ignore the -ve with zero , it's there due to log function
-print(entropy([2, 10])) # A random mix of classes
+print(entropy([1, 1]))  # Maximum Entropy e.g. a coin toss
+print(
+    entropy([0, 6])
+)  # No entropy, ignore the -ve with zero , it's there due to log function
+print(entropy([2, 10]))  # A random mix of classes
 
 # 1.0
 # -0.0
@@ -66,8 +68,10 @@ print(entropy([2, 10])) # A random mix of classes
 
 
 ```python
-# __SOLUTION__ 
+# __SOLUTION__
 from math import log
+
+
 def entropy(pi):
     """
     return the Entropy of a probability distribution:
@@ -78,18 +82,26 @@ def entropy(pi):
     for p in pi:
         p = p / sum(pi)
         if p != 0:
-            total +=  p * log(p, 2)
+            total += p * log(p, 2)
         else:
             total += 0
     total *= -1
     return total
 
+
 # Test the function
 
-print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
-print(entropy([0, 6])) # No entropy, ignore the -ve with zero , its there due to log function
-print(entropy([2, 10])) # A random mix of classes
+print(entropy([1, 1]))  # Maximum Entropy e.g. a coin toss
+print(
+    entropy([0, 6])
+)  # No entropy, ignore the -ve with zero , its there due to log function
+print(entropy([2, 10]))  # A random mix of classes
 ```
+
+    1.0
+    -0.0
+    0.6500224216483541
+
 
 ## Write a function `IG(D,a)` to calculate the information gain 
 
@@ -114,9 +126,13 @@ def IG(D, a):
 
 # Test the function
 # Set of example of the dataset - distribution of classes
-test_dist = [6, 6] # Yes, No
+test_dist = [6, 6]  # Yes, No
 # Attribute, number of members (feature)
-test_attr = [ [4,0], [2,4], [0,2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
+test_attr = [
+    [4, 0],
+    [2, 4],
+    [0, 2],
+]  # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
 
 print(IG(test_dist, test_attr))
 
@@ -125,7 +141,7 @@ print(IG(test_dist, test_attr))
 
 
 ```python
-# __SOLUTION__ 
+# __SOLUTION__
 def IG(D, a):
     """
     return the information gain:
@@ -142,12 +158,19 @@ def IG(D, a):
 
 # Test the function
 # set of example of the dataset - distribution of classes
-test_dist = [6, 6] # Yes, No
+test_dist = [6, 6]  # Yes, No
 # attribute, number of members (feature)
-test_attr = [ [4, 0], [2, 4], [0, 2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
+test_attr = [
+    [4, 0],
+    [2, 4],
+    [0, 2],
+]  # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
 
 print(IG(test_dist, test_attr))
 ```
+
+    0.5408520829727552
+
 
 ## First iteration - Decide the best split for the root node
 
@@ -157,18 +180,16 @@ print(IG(test_dist, test_attr))
 
 
 ```python
-# Your code here
-
-
+# Your code here
 
 
 # Information Gain:
 
-print ('Information Gain:\n' )
-print('Outlook:', IG(play, outlook))
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:,', IG(play, wind))
+print("Information Gain:\n")
+print("Outlook:", IG(play, outlook))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
 
 # Outlook: 0.41265581953400066
 # Temperature: 0.09212146003297261
@@ -178,38 +199,32 @@ print('Wind:,', IG(play, wind))
 
 
 ```python
-# __SOLUTION__ 
+# __SOLUTION__
 # Set of example of the dataset
-play = [9, 5] # Yes, No
+play = [9, 5]  # Yes, No
 
 # attribute, number of members (feature)
-outlook = [
-    [3, 1],  # overcast   [yes, no]
-    [6, 1],  # sunny      
-    [0, 3]   # rain
-]
-temperature = [
-    [1, 2],  # hot
-    [4, 2],  # cool
-    [4, 1]   # mild
-]
-humidity = [
-    [4, 3],  # high
-    [5, 2]   # normal
-]
-wind = [
-    [5, 2],  # no
-    [4, 3]   # yes
-]
+outlook = [[3, 1], [6, 1], [0, 3]]  # overcast   [yes, no]  # sunny  # rain
+temperature = [[1, 2], [4, 2], [4, 1]]  # hot  # cool  # mild
+humidity = [[4, 3], [5, 2]]  # high  # normal
+wind = [[5, 2], [4, 3]]  # no  # yes
 
 
 # Information Gain:
-print ('Information Gain:\n' )
-print('Outlook:', IG(play, outlook))
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:', IG(play, wind))
+print("Information Gain:\n")
+print("Outlook:", IG(play, outlook))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:", IG(play, wind))
 ```
+
+    Information Gain:
+    
+    Outlook: 0.41265581953400066
+    Temperature: 0.09212146003297261
+    Humidity: 0.0161116063701896
+    Wind: 0.0161116063701896
+
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at the root node. So far, we've built the following decision tree:
 <img src='images/outlook.png'  width ="650"  >
@@ -223,17 +238,15 @@ Follow the same steps as above. Remember, we have 6 positive examples and 1 nega
 
 
 ```python
-# Your code here 
-
-
+# Your code here
 
 
 # Information Gain:
-print ('Information Gain:\n' )
+print("Information Gain:\n")
 
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:,', IG(play, wind))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
 
 # Temperature: 0.3059584928680418
 # Humidity: 0.0760098536627829
@@ -242,21 +255,28 @@ print('Wind:,', IG(play, wind))
 
 
 ```python
-# __SOLUTION__ 
+# __SOLUTION__
 # Set of example of the dataset
-play = [6, 1] 
+play = [6, 1]
 
-temperature = [[1, 1],[3, 0], [2, 0]]  # hot, mild, cool [yes, no]  
-humidity = [[2, 0],[4, 1]]   # high, normal [yes, no]
-wind = [[3, 1],[3, 0]]      # Y, N [yes, no]
+temperature = [[1, 1], [3, 0], [2, 0]]  # hot, mild, cool [yes, no]
+humidity = [[2, 0], [4, 1]]  # high, normal [yes, no]
+wind = [[3, 1], [3, 0]]  # Y, N [yes, no]
 
 
-print ('Information Gain:\n' )
+print("Information Gain:\n")
 
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:', IG(play, wind))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:", IG(play, wind))
 ```
+
+    Information Gain:
+    
+    Temperature: 0.3059584928680418
+    Humidity: 0.0760098536627829
+    Wind: 0.12808527889139443
+
 
 We see that temperature gives us the highest information gain, so we'll use it to split our tree as shown below:
 
