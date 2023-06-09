@@ -1,4 +1,3 @@
-
 # ID3 Classification Trees: Perfect Split with Information Gain - Lab
 
 ## Introduction
@@ -42,7 +41,8 @@ You will use the same problem about deciding whether to go and play tennis on a 
 
 
 ```python
-from math import log 
+from math import log
+
 
 def entropy(pi):
     """
@@ -53,11 +53,13 @@ def entropy(pi):
     pass
 
 
-# Test the function 
+# Test the function
 
-print(entropy([1, 1])) # Maximum Entropy e.g. a coin toss
-print(entropy([0, 6])) # No entropy, ignore the -ve with zero , it's there due to log function
-print(entropy([2, 10])) # A random mix of classes
+print(entropy([1, 1]))  # Maximum Entropy e.g. a coin toss
+print(
+    entropy([0, 6])
+)  # No entropy, ignore the -ve with zero , it's there due to log function
+print(entropy([2, 10]))  # A random mix of classes
 
 # 1.0
 # -0.0
@@ -87,9 +89,13 @@ def IG(D, a):
 
 # Test the function
 # Set of example of the dataset - distribution of classes
-test_dist = [6, 6] # Yes, No
+test_dist = [6, 6]  # Yes, No
 # Attribute, number of members (feature)
-test_attr = [ [4,0], [2,4], [0,2] ] # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
+test_attr = [
+    [4, 0],
+    [2, 4],
+    [0, 2],
+]  # class1, class2, class3 of attr1 according to YES/NO classes in test_dist
 
 print(IG(test_dist, test_attr))
 
@@ -104,18 +110,16 @@ print(IG(test_dist, test_attr))
 
 
 ```python
-# Your code here
-
-
+# Your code here
 
 
 # Information Gain:
 
-print ('Information Gain:\n' )
-print('Outlook:', IG(play, outlook))
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:,', IG(play, wind))
+print("Information Gain:\n")
+print("Outlook:", IG(play, outlook))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
 
 # Outlook: 0.41265581953400066
 # Temperature: 0.09212146003297261
@@ -135,17 +139,15 @@ Follow the same steps as above. Remember, we have 6 positive examples and 1 nega
 
 
 ```python
-# Your code here 
-
-
+# Your code here
 
 
 # Information Gain:
-print ('Information Gain:\n' )
+print("Information Gain:\n")
 
-print('Temperature:', IG(play, temperature))
-print('Humidity:', IG(play, humidity))
-print('Wind:,', IG(play, wind))
+print("Temperature:", IG(play, temperature))
+print("Humidity:", IG(play, humidity))
+print("Wind:,", IG(play, wind))
 
 # Temperature: 0.3059584928680418
 # Humidity: 0.0760098536627829
