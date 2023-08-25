@@ -227,7 +227,7 @@ print("Wind:", IG(play, wind))
 
 
 We see here that the outlook attribute gives us the highest value for information gain, hence we choose this for creating a split at the root node. So far, we've built the following decision tree:
-<img src='images/outlook.png'  width ="650"  >
+<img src='https://curriculum-content.s3.amazonaws.com/data-science/images/outlook.png'  width ="650"  >
 
 
 ## Second iteration
@@ -280,7 +280,7 @@ print("Wind:", IG(play, wind))
 
 We see that temperature gives us the highest information gain, so we'll use it to split our tree as shown below:
 
-<img src='images/temp.png'  width ="650"  >
+<img src='https://curriculum-content.s3.amazonaws.com/data-science/images/temp.png'  width ="650"  >
 
 
 Let's continue. 
